@@ -1,6 +1,10 @@
 package dk.easv.mrs.GUI.Model;
+
+// import project
 import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.BLL.MovieManager;
+
+// import Java
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.List;
