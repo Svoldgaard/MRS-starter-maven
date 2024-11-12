@@ -3,6 +3,7 @@ package dk.easv.mrs.GUI.Controller;
 import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,12 +14,17 @@ import java.util.ResourceBundle;
 
 public class MovieViewController implements Initializable {
 
-
+    @FXML
     public TextField txtMovieSearch;
+    @FXML
     public ListView<Movie> lstMovies;
+    @FXML
     public Button btnCreatNewMovie;
-    public TextField MovieTitel;
-    public TextField MovieYear;
+    @FXML
+    public TextField movieTitle;
+    @FXML
+    public TextField movieYear;
+    @FXML
     private MovieModel movieModel;
 
     public MovieViewController()  {
@@ -46,6 +52,7 @@ public class MovieViewController implements Initializable {
             }
         });
 
+
     }
 
     private void displayError(Throwable t)
@@ -56,12 +63,67 @@ public class MovieViewController implements Initializable {
         alert.showAndWait();
     }
 
+    @FXML
     public void onActionCreatNewMovie(ActionEvent actionEvent) {
+        String title = movieTitle.getText().trim();
+        String yearText = movieYear.getText().trim();
+
+        // Validate the input
+        if (title.isEmpty()) {
+            showError("Title cannot be empty.");
+            return;
+        }
+
+        if (yearText.isEmpty()) {
+            showError("Year cannot be empty.");
+            return;
+        }
+
+        int year;
+        try {
+            year = Integer.parseInt(yearText);  // Convert year to integer
+        } catch (NumberFormatException e) {
+            showError("Invalid year. Please enter a valid number.");
+            return;
+        }
+
+        try {
+            // Call MovieModel's createMovie method
+            Movie newMovie = movieModel.createMovie(title, year);
+            showSuccess("Movie created: " + newMovie.getTitle());
+            // Optionally, clear the fields
+            movieTitle.clear();
+            movieYear.clear();
+        } catch (Exception e) {
+            showError("An error occurred while creating the movie.");
+            e.printStackTrace();
+        }
     }
 
-    public void txtMovieTitel(ActionEvent actionEvent) {
+    // Helper method to show error messages
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Movie Creation Failed");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    public void txtMovieYear(ActionEvent actionEvent) {
+    // Helper method to show success messages
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText("Movie Created");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void onActionUpdateMovie(ActionEvent actionEvent) {
+
+    }
+    @FXML
+    public void onActionDeleteMovie(ActionEvent actionEvent) {
+
     }
 }

@@ -15,6 +15,7 @@ public class MovieModel {
 
     private MovieManager movieManager;
 
+
     public MovieModel() throws Exception {
         movieManager = new MovieManager();
         moviesToBeViewed = FXCollections.observableArrayList();
@@ -32,4 +33,12 @@ public class MovieModel {
         moviesToBeViewed.clear();
         moviesToBeViewed.addAll(searchResults);
     }
+
+    public Movie createMovie(String title, int year) throws Exception {
+        Movie newMovie = movieManager.createMovie(title, year);  // Call MovieManager to create movie
+        moviesToBeViewed.add(newMovie);  // Add new movie to the ObservableList for GUI updates
+        return newMovie;
+    }
+
+
 }

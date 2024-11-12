@@ -7,6 +7,7 @@ import dk.easv.mrs.BE.Movie;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,14 +55,14 @@ public class MovieDAO_File implements IMovieDataAccess {
 
         List<String> movies = Files.readAllLines(Path.of(MOVIES_FILE));
 
-        /*if (!movies.isEmpty()) {
+        if (movies.size() >0) {
             String[] separatedLine = movies.get(movies.size() - 1).split(",");
             int nextId = Integer.parseInt(separatedLine[0]) + 1;
             String newMovieLine = nextId + "," + year + "," + title;
-            Files.write(MOVIES_FILE, (newMovieLine + "\r\n").getBytes(), APPEND);
+            Files.write(moviesPath, (newMovieLine + "\r\n").getBytes(), APPEND);
 
             return new Movie(nextId, year, title);
-        }      */
+        }
         return null;
     }
 
