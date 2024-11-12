@@ -10,6 +10,6 @@ public interface IMovieDataAccess {
 
     void updateMovie(Movie movie) throws Exception;
 
-    void deleteMovie(Movie movie) throws Exception;
+    Movie deleteMovie(Movie movie) throws Exception;
 
 }

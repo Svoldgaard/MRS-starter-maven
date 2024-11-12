@@ -1,7 +1,10 @@
 package dk.easv.mrs.GUI.Controller;
 
+// import Project
 import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.GUI.Model.MovieModel;
+
+// import Java
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -104,7 +107,7 @@ public class MovieViewController implements Initializable {
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("Movie Creation Failed");
+        //alert.setHeaderText("Movie Creation Failed");
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -113,7 +116,7 @@ public class MovieViewController implements Initializable {
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
-        alert.setHeaderText("Movie Created");
+        //alert.setHeaderText("Movie Created");
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -124,6 +127,24 @@ public class MovieViewController implements Initializable {
     }
     @FXML
     public void onActionDeleteMovie(ActionEvent actionEvent) {
+        // Get the selected movie from the ListView
+        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
 
+        if (selectedMovie != null) {
+            try {
+                Movie deletedMovie = movieModel.deleteMovie(selectedMovie);
+
+                if (deletedMovie != null) {
+                    showSuccess("Movie deleted successfully: " + deletedMovie.getTitle());
+                } else {
+                    showError("The movie could not be deleted.");
+                }
+            } catch (Exception e) {
+                showError("An error occurred while trying to delete the movie.");
+                e.printStackTrace();
+            }
+        } else {
+            showError("Please select a movie to delete.");
+        }
     }
 }

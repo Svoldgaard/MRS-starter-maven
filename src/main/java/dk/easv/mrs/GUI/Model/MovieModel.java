@@ -40,5 +40,12 @@ public class MovieModel {
         return newMovie;
     }
 
+    public Movie deleteMovie(Movie movie) throws Exception {
+        Movie deleteMovie = movieManager.deleteMovie(movie);
+        moviesToBeViewed.remove(movie);
+        return deleteMovie;
+
+    }
+
 
 }

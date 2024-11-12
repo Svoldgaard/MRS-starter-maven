@@ -3,11 +3,8 @@ package dk.easv.mrs.DAL;
 import dk.easv.mrs.BE.Movie;
 
 // import java
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.nio.file.StandardOpenOption.APPEND;
 
 public class MovieDAO_Mock implements IMovieDataAccess {
 
@@ -38,8 +35,9 @@ public class MovieDAO_Mock implements IMovieDataAccess {
     }
 
     @Override
-    public void deleteMovie(Movie movie) throws Exception {
+    public Movie deleteMovie(Movie movie) throws Exception {
 
+        return movie;
     }
 
 }

@@ -71,6 +71,29 @@ public class MovieDAO_File implements IMovieDataAccess {
     }
 
     @Override
-    public void deleteMovie(Movie movie) throws Exception {
+    public Movie deleteMovie(Movie movie) throws Exception {
+        List<String> movies = Files.readAllLines(moviesPath);
+        List<String> updatedMovies = new ArrayList<>(); 
+
+        boolean movieFound = false;
+
+        for (String line : movies) {
+            String[] separatedLine = line.split(",");
+            int movieId = Integer.parseInt(separatedLine[0]);
+            String movieTitle = separatedLine[2];
+            int movieYear = Integer.parseInt(separatedLine[1]);
+            if (movieId == movie.getId() && movieTitle.equals(movie.getTitle()) && movieYear == movie.getYear()) {
+                movieFound = true;
+                continue;
+            }
+            updatedMovies.add(line);
+        }
+
+        if (movieFound) {
+            Files.write(moviesPath, updatedMovies, StandardOpenOption.TRUNCATE_EXISTING);
+            return movie;
+        } else {
+            return null;
+        }
     }
 }

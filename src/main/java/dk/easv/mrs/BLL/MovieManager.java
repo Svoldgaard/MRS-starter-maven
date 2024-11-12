@@ -31,4 +31,8 @@ public class MovieManager {
         return searchResult;
     }
 
+    public Movie deleteMovie(Movie movie) throws Exception {
+        return movieDAO.deleteMovie(movie);
+    }
+
 }
