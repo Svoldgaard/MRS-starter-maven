@@ -123,7 +123,17 @@ public class MovieViewController implements Initializable {
 
     @FXML
     public void onActionUpdateMovie(ActionEvent actionEvent) {
-
+        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+        String title = movieTitle.getText().trim();
+        String yearText = movieYear.getText().trim();
+        if (title.isEmpty()) {
+            showError("Title cannot be empty.");
+            return;
+        }
+        if (yearText.isEmpty()) {
+            showError("Year cannot be empty.");
+   x         return;
+        }
     }
     @FXML
     public void onActionDeleteMovie(ActionEvent actionEvent) {

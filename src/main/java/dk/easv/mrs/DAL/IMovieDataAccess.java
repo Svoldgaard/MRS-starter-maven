@@ -8,7 +8,7 @@ public interface IMovieDataAccess {
 
     Movie createMovie(String title, int year) throws Exception;
 
-    void updateMovie(Movie movie) throws Exception;
+    Movie updateMovie(Movie movie) throws Exception;
 
     Movie deleteMovie(Movie movie) throws Exception;
 

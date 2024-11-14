@@ -47,5 +47,11 @@ public class MovieModel {
 
     }
 
+    public Movie updateMovie(Movie movie) throws Exception {
+        Movie updateMovie = movieManager.updateMovie(movie);
+        moviesToBeViewed.add(updateMovie);
+        return updateMovie;
+    }
+
 
 }

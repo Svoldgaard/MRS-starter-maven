@@ -30,8 +30,9 @@ public class MovieDAO_Mock implements IMovieDataAccess {
     }
 
     @Override
-    public void updateMovie(Movie movie) throws Exception {
+    public Movie updateMovie(Movie movie) throws Exception {
 
+        return movie;
     }
 
     @Override
