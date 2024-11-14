@@ -35,8 +35,8 @@ public class MovieModel {
     }
 
     public Movie createMovie(String title, int year) throws Exception {
-        Movie newMovie = movieManager.createMovie(title, year);  // Call MovieManager to create movie
-        moviesToBeViewed.add(newMovie);  // Add new movie to the ObservableList for GUI updates
+        Movie newMovie = movieManager.createMovie(title, year);
+        moviesToBeViewed.add(newMovie);
         return newMovie;
     }
 
@@ -48,9 +48,16 @@ public class MovieModel {
     }
 
     public Movie updateMovie(Movie movie) throws Exception {
-        Movie updateMovie = movieManager.updateMovie(movie);
-        moviesToBeViewed.add(updateMovie);
-        return updateMovie;
+        Movie updatedMovie = movieManager.updateMovie(movie);
+
+        for (int i = 0; i < moviesToBeViewed.size(); i++) {
+            if (moviesToBeViewed.get(i).getId() == updatedMovie.getId()) {
+                moviesToBeViewed.set(i, updatedMovie);
+                break;
+            }
+        }
+
+        return updatedMovie;
     }
 
 

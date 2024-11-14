@@ -20,9 +20,6 @@ public class MovieDAO_File implements IMovieDataAccess {
     private static final Path moviesPath = Path.of(MOVIES_FILE);
 
 
-
-    //The @Override annotation is not required, but is recommended for readability
-    // and to force the compiler to check and generate error msg. if needed etc.
     @Override
     public List<Movie> getAllMovies() throws IOException {
         List<String> lines = Files.readAllLines(moviesPath);
@@ -68,8 +65,30 @@ public class MovieDAO_File implements IMovieDataAccess {
 
     @Override
     public Movie updateMovie(Movie movie) throws Exception {
+        List<String> movies = Files.readAllLines(moviesPath);
+        List<String> updatedMovies = new ArrayList<>();
 
-        return movie;
+        boolean movieFound = false;
+
+        for (String line : movies) {
+            String[] separatedLine = line.split(",");
+            int movieId = Integer.parseInt(separatedLine[0]);
+
+            if (movieId == movie.getId()) {
+                String updatedLine = movie.getId() + "," + movie.getYear() + "," + movie.getTitle();
+                updatedMovies.add(updatedLine);
+                movieFound = true;
+            } else {
+                updatedMovies.add(line);
+            }
+        }
+
+        if (movieFound) {
+            Files.write(moviesPath, updatedMovies, StandardOpenOption.TRUNCATE_EXISTING);
+            return movie;
+        } else {
+            throw new Exception("Movie not found for update.");
+        }
     }
 
     @Override

@@ -42,9 +42,16 @@ public class MovieViewController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         lstMovies.setItems(movieModel.getObservableMovies());
+
+
+        lstMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                movieTitle.setText(newValue.getTitle());
+                movieYear.setText(String.valueOf(newValue.getYear()));
+            }
+        });
 
         txtMovieSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
@@ -54,8 +61,6 @@ public class MovieViewController implements Initializable {
                 e.printStackTrace();
             }
         });
-
-
     }
 
     private void displayError(Throwable t)
@@ -71,7 +76,6 @@ public class MovieViewController implements Initializable {
         String title = movieTitle.getText().trim();
         String yearText = movieYear.getText().trim();
 
-        // Validate the input
         if (title.isEmpty()) {
             showError("Title cannot be empty.");
             return;
@@ -84,17 +88,15 @@ public class MovieViewController implements Initializable {
 
         int year;
         try {
-            year = Integer.parseInt(yearText);  // Convert year to integer
+            year = Integer.parseInt(yearText);
         } catch (NumberFormatException e) {
             showError("Invalid year. Please enter a valid number.");
             return;
         }
 
         try {
-            // Call MovieModel's createMovie method
             Movie newMovie = movieModel.createMovie(title, year);
             showSuccess("Movie created: " + newMovie.getTitle());
-            // Optionally, clear the fields
             movieTitle.clear();
             movieYear.clear();
         } catch (Exception e) {
@@ -103,20 +105,16 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    // Helper method to show error messages
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        //alert.setHeaderText("Movie Creation Failed");
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // Helper method to show success messages
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
-        //alert.setHeaderText("Movie Created");
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -124,20 +122,49 @@ public class MovieViewController implements Initializable {
     @FXML
     public void onActionUpdateMovie(ActionEvent actionEvent) {
         Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        if (selectedMovie == null) {
+            showError("Please select a movie to update.");
+            return;
+        }
+
         String title = movieTitle.getText().trim();
         String yearText = movieYear.getText().trim();
+
         if (title.isEmpty()) {
             showError("Title cannot be empty.");
             return;
         }
+
         if (yearText.isEmpty()) {
             showError("Year cannot be empty.");
-   x         return;
+            return;
+        }
+
+        int year;
+        try {
+            year = Integer.parseInt(yearText);
+        } catch (NumberFormatException e) {
+            showError("Invalid year. Please enter a valid number.");
+            return;
+        }
+
+        selectedMovie.setTitle(title);
+        selectedMovie.setYear(year);
+
+        try {
+            Movie updatedMovie = movieModel.updateMovie(selectedMovie);
+            showSuccess("Movie updated: " + updatedMovie.getTitle());
+
+            movieTitle.clear();
+            movieYear.clear();
+        } catch (Exception e) {
+            showError("An error occurred while updating the movie.");
+            e.printStackTrace();
         }
     }
     @FXML
     public void onActionDeleteMovie(ActionEvent actionEvent) {
-        // Get the selected movie from the ListView
         Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
 
         if (selectedMovie != null) {
