@@ -11,12 +11,12 @@
       <ListView fx:id="lstMovies" layoutY="80.0" prefHeight="385.0" prefWidth="630.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0" />
       <TextField fx:id="txtMovieSearch" layoutX="10.0" layoutY="21.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="21.0" />
       <Label layoutX="69.0" layoutY="6.0" text="Search:" />
-      <Button fx:id="btnCreatNewMovie" layoutX="210.0" layoutY="21.0" mnemonicParsing="false" onAction="#onActionCreatNewMovie" text="Creat new movie" />
-      <TextField fx:id="movieTitle" layoutX="319.0" layoutY="22.0" />
-      <TextField fx:id="movieYear" layoutX="479.0" layoutY="22.0" />
-      <Label layoutX="369.0" layoutY="6.0" text="Movie Title" />
-      <Label layoutX="513.0" layoutY="6.0" text="Year off creation " />
-      <Button fx:id="btnUpdateMovie" layoutX="14.0" layoutY="48.0" mnemonicParsing="false" onAction="#onActionUpdateMovie" text="Update movie" />
-      <Button fx:id="btnDeleteMovie" layoutX="111.0" layoutY="48.0" mnemonicParsing="false" onAction="#onActionDeleteMovie" text="Delete movie" />
+      <Button fx:id="btnCreatNewMovie" layoutX="245.0" layoutY="47.0" mnemonicParsing="false" onAction="#onActionCreatNewMovie" text="Creat new movie" />
+      <TextField fx:id="movieTitle" layoutX="245.0" layoutY="21.0" />
+      <TextField fx:id="movieYear" layoutX="405.0" layoutY="21.0" />
+      <Label layoutX="294.0" layoutY="6.0" text="Movie Title" />
+      <Label layoutX="439.0" layoutY="6.0" text="Year off creation " />
+      <Button fx:id="btnUpdateMovie" layoutX="354.0" layoutY="47.0" mnemonicParsing="false" onAction="#onActionUpdateMovie" text="Update movie" />
+      <Button fx:id="btnDeleteMovie" layoutX="448.0" layoutY="47.0" mnemonicParsing="false" onAction="#onActionDeleteMovie" text="Delete movie" />
    </children>
 </AnchorPane>

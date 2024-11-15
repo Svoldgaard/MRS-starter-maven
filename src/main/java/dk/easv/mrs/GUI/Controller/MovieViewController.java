@@ -63,13 +63,6 @@ public class MovieViewController implements Initializable {
         });
     }
 
-    private void displayError(Throwable t)
-    {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Something went wrong");
-        alert.setHeaderText(t.getMessage());
-        alert.showAndWait();
-    }
 
     @FXML
     public void onActionCreatNewMovie(ActionEvent actionEvent) {
@@ -105,19 +98,7 @@ public class MovieViewController implements Initializable {
         }
     }
 
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
-    private void showSuccess(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
     @FXML
     public void onActionUpdateMovie(ActionEvent actionEvent) {
@@ -183,5 +164,27 @@ public class MovieViewController implements Initializable {
         } else {
             showError("Please select a movie to delete.");
         }
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void displayError(Throwable t)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Something went wrong");
+        alert.setHeaderText(t.getMessage());
+        alert.showAndWait();
     }
 }
