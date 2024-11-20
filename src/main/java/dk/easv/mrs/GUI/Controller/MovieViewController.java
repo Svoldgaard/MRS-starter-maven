@@ -8,10 +8,8 @@ import dk.easv.mrs.GUI.Model.MovieModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,6 +25,7 @@ public class MovieViewController implements Initializable {
     public TextField movieTitle;
     @FXML
     public TextField movieYear;
+
     @FXML
     private MovieModel movieModel;
 
@@ -44,6 +43,8 @@ public class MovieViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lstMovies.setItems(movieModel.getObservableMovies());
+
+
 
 
         lstMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -65,7 +66,8 @@ public class MovieViewController implements Initializable {
 
 
     @FXML
-    public void onActionCreatNewMovie(ActionEvent actionEvent) {
+    public void onActionCreatNewMovie(ActionEvent actionEvent) throws Exception {
+
         String title = movieTitle.getText().trim();
         String yearText = movieYear.getText().trim();
 
@@ -88,7 +90,8 @@ public class MovieViewController implements Initializable {
         }
 
         try {
-            Movie newMovie = movieModel.createMovie(title, year);
+            Movie newMovie = new Movie(-1,year,title);
+            newMovie = movieModel.createMovie(newMovie);
             showSuccess("Movie created: " + newMovie.getTitle());
             movieTitle.clear();
             movieYear.clear();

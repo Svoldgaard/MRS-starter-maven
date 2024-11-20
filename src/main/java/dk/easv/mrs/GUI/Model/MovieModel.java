@@ -34,10 +34,10 @@ public class MovieModel {
         moviesToBeViewed.addAll(searchResults);
     }
 
-    public Movie createMovie(String title, int year) throws Exception {
-        Movie newMovie = movieManager.createMovie(title, year);
-        moviesToBeViewed.add(newMovie);
-        return newMovie;
+    public Movie createMovie(Movie newMovie) throws Exception {
+        Movie movieCreated = movieManager.createMovie(newMovie);
+        moviesToBeViewed.add(movieCreated);
+        return movieCreated;
     }
 
     public Movie deleteMovie(Movie movie) throws Exception {

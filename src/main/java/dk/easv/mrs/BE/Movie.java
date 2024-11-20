@@ -12,6 +12,9 @@ public class Movie {
         this.year = year;
     }
 
+    public Movie(int id, String title, int year) {
+    }
+
     public int getId() {
         return id;
     }

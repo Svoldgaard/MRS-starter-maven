@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import static java.nio.file.StandardOpenOption.APPEND;
+
 
 
 public class MovieDAO_File implements IMovieDataAccess {
@@ -47,20 +47,11 @@ public class MovieDAO_File implements IMovieDataAccess {
     }
 
     @Override
-    public Movie createMovie(String title, int year) throws Exception {
-
-        List<String> movies = Files.readAllLines(Path.of(MOVIES_FILE));
-
-        if (movies.size() >0) {
-            String[] separatedLine = movies.get(movies.size() - 1).split(",");
-            int nextId = Integer.parseInt(separatedLine[0]) + 1;
-            String newMovieLine = nextId + "," + year + "," + title;
-            Files.write(moviesPath, (newMovieLine + "\r\n").getBytes(), APPEND);
-
-            return new Movie(nextId, year, title);
-        }
+    public Movie createMovie(Movie newMovie) throws Exception {
         return null;
     }
+
+
 
     @Override
     public Movie updateMovie(Movie movie) throws Exception {
