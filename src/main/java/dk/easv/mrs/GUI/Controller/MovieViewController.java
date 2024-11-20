@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,18 +17,20 @@ import java.util.ResourceBundle;
 public class MovieViewController implements Initializable {
 
     @FXML
-    public TextField txtMovieSearch;
+    private TextField txtMovieSearch;
     @FXML
-    public ListView<Movie> lstMovies;
+    private TextField movieTitle;
     @FXML
-    public Button btnCreatNewMovie;
+    private TextField movieYear;
     @FXML
-    public TextField movieTitle;
+    private TableView<Movie> tblMovies;
     @FXML
-    public TextField movieYear;
-
+    private TableColumn<Movie, String> colTitle;
+    @FXML
+    private TableColumn<Movie,Integer> colYear;
     @FXML
     private MovieModel movieModel;
+
 
     public MovieViewController()  {
 
@@ -42,17 +45,22 @@ public class MovieViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lstMovies.setItems(movieModel.getObservableMovies());
 
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
 
+        tblMovies.setItems(movieModel.getObservableMovies());
 
-
-        lstMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        tblMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 movieTitle.setText(newValue.getTitle());
                 movieYear.setText(String.valueOf(newValue.getYear()));
+            } else{
+                movieTitle.setText("");
+                movieYear.setText("");
             }
         });
+
 
         txtMovieSearch.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
@@ -105,7 +113,8 @@ public class MovieViewController implements Initializable {
 
     @FXML
     public void onActionUpdateMovie(ActionEvent actionEvent) {
-        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        Movie selectedMovie = tblMovies.getSelectionModel().getSelectedItem();
 
         if (selectedMovie == null) {
             showError("Please select a movie to update.");
@@ -149,7 +158,8 @@ public class MovieViewController implements Initializable {
     }
     @FXML
     public void onActionDeleteMovie(ActionEvent actionEvent) {
-        Movie selectedMovie = lstMovies.getSelectionModel().getSelectedItem();
+
+        Movie selectedMovie = tblMovies.getSelectionModel().getSelectedItem();
 
         if (selectedMovie != null) {
             try {

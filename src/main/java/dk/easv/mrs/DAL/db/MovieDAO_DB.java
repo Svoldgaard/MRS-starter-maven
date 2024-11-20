@@ -1,8 +1,10 @@
 package dk.easv.mrs.DAL.db;
 
+// Import Project
 import dk.easv.mrs.BE.Movie;
 import dk.easv.mrs.DAL.IMovieDataAccess;
 
+// import Java
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,11 +87,38 @@ public class MovieDAO_DB implements IMovieDataAccess {
 
     @Override
     public Movie updateMovie(Movie movie) throws Exception {
-        return null;
+        MyDatabaseConnector databaseConnector = new MyDatabaseConnector();
+
+        String sql = "UPDATE dbo.Movie SET Title=?,Year=? WHERE Id=?";
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql))
+        {
+            stmt.setString(1,movie.getTitle());
+            stmt.setInt(2, movie.getYear());
+            stmt.setInt(3, movie.getId());
+
+            stmt.executeUpdate();
+        }catch (SQLException ex){
+            throw new Exception("Could not get movies from database.", ex);
+        }
+        return movie;
     }
 
     @Override
     public Movie deleteMovie(Movie movie) throws Exception {
-        return null;
+
+        MyDatabaseConnector databaseConnector = new MyDatabaseConnector();
+        String sql = "DELETE FROM dbo.Movie WHERE Id=?";
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setInt(1, movie.getId());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new Exception("Could not delete movie", e);
+        }
+        return movie;
     }
 }
